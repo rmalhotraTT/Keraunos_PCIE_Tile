@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<launchConfiguration type="org.eclipse.cdt.debug.gdbjtag.launchConfigurationType">
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.connection" value="gdb:arch-c-30.aus2.tenstorrent.com:12345#"/>
+    <intAttribute key="org.eclipse.cdt.debug.gdbjtag.core.delay" value="3"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doHalt" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.doReset" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageFileName" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.imageOffset" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.initCommands" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.jtagDeviceId" value="org.eclipse.cdt.debug.gdbjtag.core.jtagdevice.genericDevice"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadImage" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.loadSymbols" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.pcRegister" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.runCommands" value="set backtrace limit 50&#10;"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setPcRegister" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setResume" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.setStopAt" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.stopAt" value=""/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsFileName" value="/localdev/pdroy/PCIE_Tile_Keraunos/Keraunos_PCIE_Tile/software/host_pcie_test/pcie_e2e_test.elf"/>
+    <stringAttribute key="org.eclipse.cdt.debug.gdbjtag.core.symbolsOffset" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForImage" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useFileForSymbols" value="true"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForImage" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useProjBinaryForSymbols" value="false"/>
+    <booleanAttribute key="org.eclipse.cdt.debug.gdbjtag.core.useRemoteTarget" value="true"/>
+    <stringAttribute key="org.eclipse.cdt.dsf.gdb.DEBUG_NAME" value="/tools_vendor/synopsys/virtualizer-tool-elite/V-2024.03/SLS/linux/gnu/riscv32-unknown-elf-gdb/bin/riscv32-unknown-elf-gdb "/>
+    <booleanAttribute key="org.eclipse.cdt.dsf.gdb.UPDATE_THREADLIST_ON_SUSPEND" value="false"/>
+    <intAttribute key="org.eclipse.cdt.launch.ATTR_BUILD_BEFORE_LAUNCH_ATTR" value="0"/>
+    <stringAttribute key="org.eclipse.cdt.launch.COREFILE_PATH" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.DEBUGGER_REGISTER_GROUPS" value=""/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROGRAM_NAME" value="/localdev/pdroy/PCIE_Tile_Keraunos/Keraunos_PCIE_Tile/software/host_pcie_test/pcie_e2e_test.elf"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_ATTR" value=""/>
+    <booleanAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_AUTO_ATTR" value="false"/>
+    <stringAttribute key="org.eclipse.cdt.launch.PROJECT_BUILD_CONFIG_ID_ATTR" value="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.272177920"/>
+    <mapAttribute key="org.eclipse.debug.core.preferred_launchers">
+        <mapEntry key="[debug]" value="org.eclipse.cdt.debug.gdbjtag.core.dsfLaunchDelegate"/>
+    </mapAttribute>
+</launchConfiguration>

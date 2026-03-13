@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ASCII"?>
+<com.synopsys.vp.base.vpcfg.core:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.synopsys.vp.base.vpcfg.core="com.synopsys.vp.base.vpcfg.core.model" description="empty configuration" comment="gen_tool_VDK-C">
+  <debugInfo/>
+  <monitorSets name="Default" path="${vpconfigDir}/Default.monitors" chartDisplayScript="">
+    <startTrigger type="TIME" value="0"/>
+  </monitorSets>
+</com.synopsys.vp.base.vpcfg.core:Configuration>

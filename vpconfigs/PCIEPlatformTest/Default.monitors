@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Monitors>
+  <Monitor>
+    <MonitorName>FastTrack Errors</MonitorName>
+    <MonitorKind>FastTrack Errors</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Info</MonitorName>
+    <MonitorKind>FastTrack Info</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Model Internal</MonitorName>
+    <MonitorKind>FastTrack Model Internal</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Warnings</MonitorName>
+    <MonitorKind>FastTrack Warnings</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.AXI_Slave</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.BusMaster</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.CxlRegAccess</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ELBIMaster</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.Native_DBI</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.PCIMem</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.PCIMem_Slave</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.atc_invalidate_pri_resp_skt</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ats_pri_req_skt</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_cfg_caps_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_rx_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>Socket Monitor</MonitorName>
+    <MonitorKind>Socket Monitor</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_tx_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.AXI_Slave</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.BusMaster</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.CxlRegAccess</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ELBIMaster</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.Native_DBI</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.PCIMem</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.PCIMem_Slave</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.atc_invalidate_pri_resp_skt</DesignObjName>
+    <Enabled>1</Enabled>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ats_pri_req_skt</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_cfg_caps_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_rx_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>TLM Port Trace</MonitorName>
+    <MonitorKind>TLM Port Trace</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.ide_tx_initiator</DesignObjName>
+    <Enabled>1</Enabled>
+    <Attribute>
+      <AttrName>Specify ranges</AttrName>
+      <Kind>0</Kind>
+      <DefaultValue type="LIST">
+        <VariantListItem type="PAIR">
+          <Variant type="UINT64">0</Variant>
+          <Variant type="UINT64">18446744073709551615</Variant>
+        </VariantListItem>
+      </DefaultValue>
+      <CurrentValue/>
+    </Attribute>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Errors</MonitorName>
+    <MonitorKind>FastTrack Errors</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Keraunos_PCIE_Chiplet.Misc</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Info</MonitorName>
+    <MonitorKind>FastTrack Info</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Keraunos_PCIE_Chiplet.Misc</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Model Internal</MonitorName>
+    <MonitorKind>FastTrack Model Internal</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Keraunos_PCIE_Chiplet.Misc</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Warnings</MonitorName>
+    <MonitorKind>FastTrack Warnings</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Keraunos_PCIE_Chiplet.Misc</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Errors</MonitorName>
+    <MonitorKind>FastTrack Errors</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Misc.PCIeSwitch</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Info</MonitorName>
+    <MonitorKind>FastTrack Info</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Misc.PCIeSwitch</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Model Internal</MonitorName>
+    <MonitorKind>FastTrack Model Internal</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Misc.PCIeSwitch</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Warnings</MonitorName>
+    <MonitorKind>FastTrack Warnings</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Misc.PCIeSwitch</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+</Monitors>

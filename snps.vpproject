@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<com.synopsys.vp.base.vpcfg.core:VPProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.synopsys.vp.base.vpcfg.core="com.synopsys.vp.base.vpcfg.core.vpprj" platformHome="." vendor="Synopsys" library="Keraunos_PCIE_Tile" platformName="Keraunos_PCIE_Tile" activeConfig="PCIEPlatformTest/PCIEPlatformTest" activeBuild="Release" description="" simWorkingDir="${root}/bin/export">
+  <builds name="Release" simPath="${root}/bin/export/Release/sim" simExtraArgs=""/>
+  <attributes key="modelVersion" value="1.0"/>
+  <attributes key="hwName" value="Keraunos_PCIE_Tile"/>
+</com.synopsys.vp.base.vpcfg.core:VPProject>
