@@ -75,27 +75,6 @@ Default `CROSS_COMPILE` targets **`riscv64-unknown-linux-musl-`** and prepends `
 
 `/localdev/pdroy/Ascalon_Workspace/linux_extensible/vsws_TT/Ascalon_Chiplet_System/software/mini-riscv64-linux/`
 
-## Imperas / DWC PCIe: `bad native address bounds` (ASRT) on `turnstile_pci_0`
-
-If Linux boots on the host UART then the sim dies with:
-
-`Assertion failure : bad native address bounds` in `DWC_PCIe_DM_impl` / `turnstile_pci_0`,
-
-that is the **Synopsys PCIe RC Fast Model + Imperas morph**, usually when the **Linux DesignWare host driver** programs more / larger iATU windows than the default model reservation.
-
-**In this repo:** `default` and `mini_riscv64_linux` VPCs set **`CX_ATU_NUM_INBOUND_REGIONS=256`** and **`CX_ATU_NUM_OUTBOUND_REGIONS=256`** on **`Host_Chiplet.Misc.PCIE_RC`** (same idea as Ascalon mini-linux vpcfg). Regenerate / re-open the project so **`Properties.xml`** picks up the override.
-
-**Debug:**
-
-```bash
-export IMPERAS_BACKTRACE=1
-# re-run simulation from the same shell
-```
-
-**Firmware / DTB:** Host `fw_payload.elf` must be built per **`Documentation/keraunos-host-riscv-linux.md` §5.3** — especially **`FW_FDT_PATH`** pointing at **`smc_pcie_tile.dtb`** (not an ad-hoc DTS). Wrong PCIe `reg` / `ranges` vs. the VDK bus window can also provoke bad accesses.
-
-If it still asserts after ATU bump + confirmed DTB build, treat as **tool/model** — collect the backtrace and open a case via **Synopsys SolvNet** (Imperas path in the message).
-
 ## Related
 
 - `Documentation/keraunos-host-riscv-linux.md` (if present)
