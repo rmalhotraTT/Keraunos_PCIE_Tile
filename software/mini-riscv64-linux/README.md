@@ -1,32 +1,42 @@
 # mini-riscv64-linux (Keraunos PCIE Tile host)
 
-Ascalon-style **minimal Linux + OpenSBI** artifacts for the **host** Rocket in `Keraunos_PCIE_Tile`.
+**Two-image** host load for VP: `vmlinux` (symbols @ `0x80000000`) + `fw_payload.elf` (@ `0x0`), same *style* as Ascalon mini-linux.
 
-## Prerequisites
+## Fast path: copy from existing `riscv-linux` workspace
 
-- RISC-V cross compiler (e.g. `riscv64-unknown-linux-gnu-gcc`) on `PATH`
-- `dtc` (device-tree-compiler)
-- Linux kernel source tree and OpenSBI source (versions per your policy; Ascalon uses 6.12.x + OpenSBI 1.5.x)
-
-See `Documentation/mini-riscv64-linux-keraunos.md` for the full workflow.
-
-## Quick start
+On machines where `/localdev/rmalhotra/riscv-linux` exists:
 
 ```bash
 cd software/mini-riscv64-linux
-# Edit vdk-linux-build-keraunos-host.sh: set LINUX_SRC, OPENSBI_SRC, CROSS_COMPILE
 ./vdk-linux-build-keraunos-host.sh
 ```
 
-Artifacts should land in `output/`:
+Or explicitly:
 
-- `vmlinux` — kernel with symbols (for VP `symbols` load)
-- `fw_payload.elf` — OpenSBI + payload (for VP `image+symbols` at `0x0` in mini vpcfg)
+```bash
+export RISCV_LINUX_ROOT=/localdev/rmalhotra/riscv-linux
+./vdk-linux-build-keraunos-host.sh --sync
+```
+
+## Other machines
+
+```bash
+export RISCV_LINUX_ROOT=/path/to/your/riscv-linux
+./vdk-linux-build-keraunos-host.sh --sync
+```
+
+## Full kernel + OpenSBI rebuild
+
+Needs `dtc`, toolchain, kernel tree, OpenSBI tree, and `ROOTFS_CPIO`. See `Documentation/mini-riscv64-linux-keraunos.md`.
+
+```bash
+./vdk-linux-build-keraunos-host.sh --full
+```
 
 ## DTS
 
-- `DTS/keraunos_host_template.dts` — **template**; validate against **Keraunos** VP map before relying on it.
+- **`DTS/keraunos_host.dts`** — Keraunos host (UART `0xC000A000`, PLIC, PCIe RC). Sync with `/localdev/rmalhotra/riscv-linux/riscv-host-keraunos.dts` when the map changes.
 
 ## VP
 
-Use configuration `mini_riscv64_linux/mini_riscv64_linux` (see project `snps.vpproject` → active configuration).
+Project **`snps.vpproject`** uses **`mini_riscv64_linux/mini_riscv64_linux`**. Switch to **`default/default`** to use the single `fw_payload` path under `riscv-linux/opensbi/...` again.

@@ -1,0 +1,113 @@
+/dts-v1/;
+/*
+ * Keraunos PCIE Tile — host Linux device tree for VDK (TT_Rocket_LT).
+ *
+ * Source of truth (sync when host memory map changes):
+ *   /localdev/rmalhotra/riscv-linux/riscv-host-keraunos.dts
+ */
+
+/ {
+    #address-cells = <2>;
+    #size-cells = <2>;
+    compatible = "tenstorrent,keraunos-vdk";
+    model = "Keraunos VDK Host_Chiplet — TT_Rocket_LT RISC-V";
+
+    chosen {
+        /* UART at 0xC000A000 — Synopsys DesignWare UART (DW_apb_uart) */
+        bootargs = "console=ttyS0,115200 earlycon=uart8250,mmio32,0xC000A000 rdinit=/init pci=realloc pci=assign-busses";
+        linux,initrd-start = <0x0 0x84000000>;
+        linux,initrd-end   = <0x0 0x86000000>;
+    };
+
+    /* CPU — TT_Rocket_LT RISC-V (single core in VDK Host_Chiplet) */
+    cpus {
+        #address-cells = <1>;
+        #size-cells = <0>;
+        timebase-frequency = <1000000>;
+
+        cpu@0 {
+            compatible = "riscv";
+            device_type = "cpu";
+            reg = <0>;
+            riscv,isa = "rv64imafdc";
+            mmu-type = "riscv,sv39";
+            cpu0_intc: interrupt-controller {
+                compatible = "riscv,cpu-intc";
+                interrupt-controller;
+                #interrupt-cells = <1>;
+            };
+        };
+    };
+
+    /* Host DRAM — 0x8000_0000, 64 MB (mem_map_top / pcie_e2e_test.c) */
+    memory@80000000 {
+        device_type = "memory";
+        reg = <0x0 0x80000000 0x0 0x04000000>;
+    };
+
+    /* PLIC — 0xC400_0000 */
+    plic: interrupt-controller@C4000000 {
+        compatible = "riscv,plic0";
+        interrupt-controller;
+        #interrupt-cells = <1>;
+        #address-cells = <0>;
+        reg = <0x0 0xC4000000 0x0 0x04000000>;
+        interrupts-extended = <&cpu0_intc 11 &cpu0_intc 9>;
+        riscv,ndev = <64>;
+    };
+
+    /* UART — 0xC000_A000 (pcie_e2e_test.c memory map comment) */
+    uart0: serial@C000A000 {
+        compatible = "snps,dw-apb-uart", "ns16550a";
+        reg = <0x0 0xC000A000 0x0 0x100>;
+        interrupts = <10>;
+        interrupt-parent = <&plic>;
+        clock-frequency = <25000000>;
+        current-speed = <115200>;
+        reg-io-width = <4>;
+        reg-shift = <2>;
+    };
+
+    /*
+     * PCIe Root Complex (Synopsys DesignWare)
+     * VDK path: Host_Chiplet > Misc > PCIE_RC
+     */
+    pcie: pcie@44000000 {
+        compatible = "snps,dw-pcie";
+        reg = <0x0 0x44000000 0x0 0x400000>,
+              <0x0 0x70000000 0x0 0x10000000>;
+        reg-names = "dbi", "config";
+
+        #address-cells = <3>;
+        #size-cells = <2>;
+        device_type = "pci";
+
+        bus-range = <0x0 0xff>;
+
+        ranges =
+            <0x02000000 0x0 0x70000000  0x0 0x70000000  0x0 0x10000000>;
+
+        interrupt-parent = <&plic>;
+        interrupts = <32>;
+        interrupt-names = "intr";
+        #interrupt-cells = <1>;
+        interrupt-map-mask = <0 0 0 7>;
+        interrupt-map = <0 0 0 1 &plic 32>,
+                        <0 0 0 2 &plic 33>,
+                        <0 0 0 3 &plic 34>,
+                        <0 0 0 4 &plic 35>;
+
+        clocks = <&pcie_clk>;
+        clock-names = "pcie";
+
+        num-lanes = <16>;
+
+        status = "okay";
+    };
+
+    pcie_clk: pcie-clock {
+        compatible = "fixed-clock";
+        #clock-cells = <0>;
+        clock-frequency = <250000000>;
+    };
+};
