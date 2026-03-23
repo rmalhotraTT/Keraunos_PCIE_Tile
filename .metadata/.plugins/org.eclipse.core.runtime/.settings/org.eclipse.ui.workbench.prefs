@@ -1,0 +1,12 @@
+//org.eclipse.ui.commands/state/com.coware.scdt.scv.wave.commands.unitsSet/org.eclipse.ui.commands.radioState=decimal
+//org.eclipse.ui.commands/state/com.synopsys.sls.scdebug.ide.RunForToCommand/org.eclipse.ui.commands.radioState=RunFor
+//org.eclipse.ui.commands/state/org.eclipse.ui.navigator.resources.nested.changeProjectPresentation/org.eclipse.ui.commands.radioState=false
+eclipse.preferences.version=1
+org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_END=248,248,248
+org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_BG_START=248,248,248
+org.eclipse.ui.workbench.ACTIVE_NOFOCUS_TAB_TEXT_COLOR=0,0,0
+org.eclipse.ui.workbench.ACTIVE_TAB_BG_END=248,248,248
+org.eclipse.ui.workbench.ACTIVE_TAB_BG_START=248,248,248
+org.eclipse.ui.workbench.INACTIVE_TAB_BG_END=248,248,248
+org.eclipse.ui.workbench.INACTIVE_TAB_BG_START=248,248,248
+org.eclipse.ui.workbench.INACTIVE_TAB_TEXT_COLOR=0,0,0

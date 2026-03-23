@@ -1,0 +1,2 @@
+//org.eclipse.debug.core.PREFERRED_DELEGATES/org.eclipse.cdt.testsrunner.launch.CTestsRunner=org.eclipse.cdt.testsrunner.launch.dsf.runTests,debug,;org.eclipse.cdt.testsrunner.launch.runTests,run,;
+eclipse.preferences.version=1

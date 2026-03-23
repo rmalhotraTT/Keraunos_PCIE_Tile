@@ -1,0 +1,16 @@
+!SESSION 2026-03-16 14:13:38.881 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.7
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product com.synopsys.vpide.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -data /localdev/rmalhotra/Keraunos_PCIE_Tile -product com.synopsys.vpide.product
+
+!ENTRY org.python.pydev.shared_core 1 1 2026-03-16 14:13:46.014
+!MESSAGE Restoring info for: /tools_vendor/synopsys/virtualizer-tool-elite/V-2024.03/SLS/linux/python3/bin/python3
+
+!ENTRY org.python.pydev.shared_core 1 1 2026-03-16 14:13:51.161
+!MESSAGE Finished restoring information for: /tools_vendor/synopsys/virtualizer-tool-elite/V-2024.03/SLS/linux/python3/bin/python3 at: /localdev/rmalhotra/Keraunos_PCIE_Tile/.metadata/.plugins/org.python.pydev/v1_blttkpgg8v4xcjm7klusrau0w
+
+!ENTRY org.python.pydev.shared_core 4 4 2026-03-16 14:13:55.944
+!MESSAGE Info: Rebuilding internal caches: /localdev/rmalhotra/Keraunos_PCIE_Tile/.metadata/.plugins/com.python.pydev.analysis/python_v1_blttkpgg8v4xcjm7klusrau0w/python.pydevsysteminfo (Expected error to be provided and got no error!)
