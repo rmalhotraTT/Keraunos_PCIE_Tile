@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Monitors>
+  <Monitor>
+    <MonitorName>FastTrack Errors</MonitorName>
+    <MonitorKind>FastTrack Errors</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Info</MonitorName>
+    <MonitorKind>FastTrack Info</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Warnings</MonitorName>
+    <MonitorKind>FastTrack Warnings</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+  <Monitor>
+    <MonitorName>FastTrack Model Internal</MonitorName>
+    <MonitorKind>FastTrack Model Internal</MonitorKind>
+    <DesignObjName>Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC</DesignObjName>
+    <Enabled>1</Enabled>
+    <Recursive>1</Recursive>
+  </Monitor>
+</Monitors>
