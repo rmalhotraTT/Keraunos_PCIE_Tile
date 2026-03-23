@@ -1,6 +1,8 @@
 # Mini RISC-V Linux for Keraunos PCIE Tile (host)
 
-This document tracks bringing an **Ascalon-style mini Linux** flow into this workspace: Linux + OpenSBI `fw_payload.elf`, loaded in the Virtualizer with a **two-image** `initial_image` (`vmlinux` for symbols + `fw_payload.elf` for execution).
+This document tracks bringing **host Linux** artifacts into `software/mini-riscv64-linux/output/` and pointing VP at them. The host `initial_image` uses **`fw_payload.elf` with empty load addresses** so the simulator applies **ELF program headers** (entry **0x80000000** for this OpenSBI build) — same pattern as `vpconfigs/default/default.vpcfg`.
+
+> **Do not** copy Ascalon’s `{fw_payload,0x00000000,...}` line blindly: Keraunos `fw_payload.elf` is linked at **0x80000000**. Forcing load at **0x0** breaks execution (bogus PC, debugger “No connection”, crash).
 
 ## Goals
 
@@ -58,9 +60,16 @@ Default `CROSS_COMPILE` targets **`riscv64-unknown-linux-musl-`** and prepends `
 
 ## Verification checklist
 
-- [ ] `output/vmlinux` and `output/fw_payload.elf` exist (after `--sync` or `--full`).
+- [ ] `output/fw_payload.elf` exists (after `--sync` or `--full`). (`vmlinux` in `output/` is optional for source debug; not required for the single-image VP line.)
+- [ ] `readelf -l output/fw_payload.elf` shows **VirtAddr** loads at **0x8000…** — VPC must **not** override with `0x0`.
 - [ ] `DTS/keraunos_host.dts` matches `riscv-host-keraunos.dts` when the host map changes.
 - [ ] Simulation: OpenSBI → Linux → console on **UART @ 0xC000A000** (per DTS `bootargs`).
+
+## If the host “crashes” or debugger shows nonsense PC
+
+1. **Image load address** — confirm VPC uses **`fw_payload.elf,,,image+symbols`** (empty address), not `...,0x00000000,...`.
+2. **Kernel / userspace ISA** — follow **`Documentation/keraunos-host-riscv-linux.md`** (version1): Host CPU is **rv64imac**; **`CONFIG_FPU=n`** in the kernel; initramfs built with **musl rv64imac** (`riscv64-unknown-linux-musl-`), not FPU userspace from the gnu `lp64d` toolchain.
+3. Re-sync **`fw_payload.elf`** after any OpenSBI/kernel rebuild: `./vdk-linux-build-keraunos-host.sh --sync`.
 
 ## Reference (Ascalon pattern)
 

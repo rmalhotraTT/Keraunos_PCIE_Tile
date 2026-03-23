@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<com.synopsys.vp.base.vpcfg.core:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.synopsys.vp.base.vpcfg.core="com.synopsys.vp.base.vpcfg.core.model" description="Host uses mini-riscv64-linux (vmlinux + fw_payload); device unchanged" comment="See Documentation/mini-riscv64-linux-keraunos.md">
+<com.synopsys.vp.base.vpcfg.core:Configuration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:com.synopsys.vp.base.vpcfg.core="com.synopsys.vp.base.vpcfg.core.model" description="Host loads mini-riscv64-linux fw_payload.elf using ELF segments (same as default); device unchanged" comment="Do not force load @0x0 — OpenSBI entry is 0x80000000. See Documentation/mini-riscv64-linux-keraunos.md">
   <debugInfo traceSimOutput="true" generateUniqueSimOutFile="true" autoContinueInitialCrunch="false"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.Infra.RST_GEN.#SCML_PROPERTIES#active_at_start" value="true"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.#SCML_PROPERTIES#SHARED_DBI_ENABLED" value="false"/>
@@ -9,7 +9,7 @@
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.#SCML_PROPERTIES#cc_dbi_aclk_Override" value="100"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.#SCML_PROPERTIES#cc_pipe_clk_Override" value="250"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.Misc.PCIE_RC.#SCML_PROPERTIES#refclk_Override" value="100"/>
-  <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.SMC.CPU.TT_Rocket_LT_PSP_1.#EXTRA_PROPERTIES#/ImageInfo/cpu0/initial_image" value="{../../software/mini-riscv64-linux/output/vmlinux,0x80000000,,symbols,} {../../software/mini-riscv64-linux/output/fw_payload.elf,0x00000000,,image+symbols,} "/>
+  <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.SMC.CPU.TT_Rocket_LT_PSP_1.#EXTRA_PROPERTIES#/ImageInfo/cpu0/initial_image" value="{../../software/mini-riscv64-linux/output/fw_payload.elf,,,image+symbols,} "/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.SMC.CPU.TT_Rocket_LT_PSP_1.#SCML_PROPERTIES#/Simulator/defaultsemihost" value="false"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.SMC.CPU.iStub|iBus_TT_Rocket_LT_PSP_1_DATA_Undecoded.#EXTRA_PROPERTIES#/all_encaps/response" value="TLM_OK_RESPONSE"/>
   <paramOverrides key="Keraunos_PCIE_Tile.Host_Chiplet.SMC.CPU.iStub|iBus_TT_Rocket_LT_PSP_1_INSTRUCTION_Undecoded.#EXTRA_PROPERTIES#/all_encaps/response" value="TLM_OK_RESPONSE"/>

@@ -1,6 +1,8 @@
 # mini-riscv64-linux (Keraunos PCIE Tile host)
 
-**Two-image** host load for VP: `vmlinux` (symbols @ `0x80000000`) + `fw_payload.elf` (@ `0x0`), same *style* as Ascalon mini-linux.
+**Host load:** `fw_payload.elf` with **empty** load address in VPC (ELF segments decide placement; OpenSBI entry **0x80000000**). Same idea as `vpconfigs/default` — **not** Ascalon’s forced `@0x0` load.
+
+The sync script still copies **`vmlinux`** into `output/` if you want it for offline debug / gdb symbol files; VP uses **`fw_payload.elf`** only.
 
 ## Fast path: copy from existing `riscv-linux` workspace
 
