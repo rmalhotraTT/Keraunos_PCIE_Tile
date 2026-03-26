@@ -1,3 +1,2 @@
-# Generated images — do not commit binaries
-*
-!.gitignore
+# Keep backup directory out of git (large duplicates)
+backup_stock_kernel_*/
