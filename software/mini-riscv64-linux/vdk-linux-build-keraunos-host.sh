@@ -14,8 +14,12 @@ OUT_DIR="${MINI_ROOT}/output"
 DTS_SRC="${MINI_ROOT}/DTS/keraunos_host.dts"
 DTB_OUT="${OUT_DIR}/keraunos_host.dtb"
 
-: "${CROSS_COMPILE:=riscv64-unknown-linux-musl-}"
 : "${ROOTFS_CPIO:=}"
+
+# GNU toolchain (GCC 14) for kernel + OpenSBI; musl toolchain for userspace only.
+GNU_TC="/proj_perf/asc/tools/asc-toolchain/tt-riscv-toolchain-20240125/bin"
+MUSL_TC="/localdev/rmalhotra/riscv-linux/rv64imac-toolchain/bin"
+: "${CROSS_COMPILE:=riscv64-unknown-linux-musl-}"
 
 # Central workspace (adjust on other machines)
 if [[ -z "${RISCV_LINUX_ROOT:-}" && -d "/localdev/rmalhotra/riscv-linux" ]]; then
@@ -25,7 +29,7 @@ fi
 LINUX_SRC="${LINUX_SRC:-}"
 OPENSBI_SRC="${OPENSBI_SRC:-}"
 
-export PATH="/localdev/rmalhotra/riscv-linux/rv64imac-toolchain/bin:/opt/riscv/bin:${PATH}"
+export PATH="${GNU_TC}:${MUSL_TC}:/opt/riscv/bin:${PATH}"
 export CROSS_COMPILE
 
 mkdir -p "${OUT_DIR}"
@@ -68,16 +72,22 @@ sync_from_riscv_linux() {
 }
 
 compile_dtb() {
+  local dtc_bin="dtc"
   if ! command -v dtc >/dev/null 2>&1; then
-    echo "SKIP: dtc not in PATH (install device-tree-compiler to refresh ${DTB_OUT} from DTS)"
-    return 0
+    local kern_dtc="${LINUX_SRC:-${MINI_ROOT}/linux-6.12.1}/scripts/dtc/dtc"
+    if [[ -x "${kern_dtc}" ]]; then
+      dtc_bin="${kern_dtc}"
+    else
+      echo "SKIP: dtc not in PATH and kernel dtc not built yet"
+      return 0
+    fi
   fi
   if [[ ! -f "${DTS_SRC}" ]]; then
     echo "ERROR: Missing ${DTS_SRC}"
     exit 1
   fi
   echo "== Device tree (dtc) =="
-  dtc -I dts -O dtb -o "${DTB_OUT}" "${DTS_SRC}"
+  "${dtc_bin}" -I dts -O dtb -o "${DTB_OUT}" "${DTS_SRC}"
   echo "Wrote ${DTB_OUT}"
 }
 
@@ -89,8 +99,6 @@ full_build() {
   LINUX_SRC="${LINUX_SRC:-${MINI_ROOT}/linux-6.12.1}"
   OPENSBI_SRC="${OPENSBI_SRC:-${MINI_ROOT}/opensbi-1.5.1}"
   ROOTFS_CPIO="${ROOTFS_CPIO:-${OUT_DIR}/rootfs.cpio}"
-
-  compile_dtb
 
   if [[ ! -d "${LINUX_SRC}" ]]; then
     echo "ERROR: LINUX_SRC not found (${LINUX_SRC}). Use --sync or set LINUX_SRC."
@@ -105,29 +113,57 @@ full_build() {
     exit 1
   fi
 
-  echo "== Linux kernel =="
+  echo "== Linux kernel (mini — rv64imac, no FPU, stripped for VDK sim) =="
   pushd "${LINUX_SRC}" >/dev/null
   make ARCH=riscv CROSS_COMPILE="${CROSS_COMPILE}" defconfig
+
+  # --- Keep: UART, PCIe, initramfs, serial console ---
+  ./scripts/config --file .config --disable CONFIG_FPU
+  ./scripts/config --file .config --enable CONFIG_PCI
+  ./scripts/config --file .config --enable CONFIG_PCIE_DW
+  ./scripts/config --file .config --enable CONFIG_PCIE_DW_HOST
+  ./scripts/config --file .config --enable CONFIG_BLK_DEV_INITRD
+  ./scripts/config --file .config --enable CONFIG_DEVTMPFS
+  ./scripts/config --file .config --enable CONFIG_DEVTMPFS_MOUNT
   ./scripts/config --file .config --set-str INITRAMFS_SOURCE "${ROOTFS_CPIO}"
   ./scripts/config --file .config --enable INITRAMFS_COMPRESSION_NONE
-  yes "" | make ARCH=riscv CROSS_COMPILE="${CROSS_COMPILE}" oldconfig
+
+  # --- Strip: peripherals the VDK doesn't have (safe to remove) ---
+  ./scripts/config --file .config --disable CONFIG_USB_SUPPORT
+  ./scripts/config --file .config --disable CONFIG_SOUND
+  ./scripts/config --file .config --disable CONFIG_DRM
+  ./scripts/config --file .config --disable CONFIG_INPUT
+  ./scripts/config --file .config --disable CONFIG_HID
+  ./scripts/config --file .config --disable CONFIG_I2C
+  ./scripts/config --file .config --disable CONFIG_SPI
+  ./scripts/config --file .config --disable CONFIG_HWMON
+  ./scripts/config --file .config --disable CONFIG_WATCHDOG
+  ./scripts/config --file .config --disable CONFIG_MEDIA_SUPPORT
+  ./scripts/config --file .config --disable CONFIG_WIRELESS
+  ./scripts/config --file .config --disable CONFIG_PROFILING
+  ./scripts/config --file .config --disable CONFIG_DEBUG_INFO
+  yes "" 2>/dev/null | make ARCH=riscv CROSS_COMPILE="${CROSS_COMPILE}" oldconfig || true
+  make ARCH=riscv CROSS_COMPILE="${CROSS_COMPILE}" olddefconfig
   make ARCH=riscv CROSS_COMPILE="${CROSS_COMPILE}" -j"$(nproc)" -s Image
   cp -f arch/riscv/boot/Image "${OUT_DIR}/Image"
   cp -f vmlinux "${OUT_DIR}/vmlinux"
   popd >/dev/null
 
-  echo "== OpenSBI =="
+  compile_dtb
+
+  echo "== OpenSBI (rv64imac, lp64) =="
   pushd "${OPENSBI_SRC}" >/dev/null
-  export PLATFORM_RISCV_XLEN=64
-  export PLATFORM=generic
-  export PLATFORM_RISCV_ISA=rv64imafdc_zifencei
-  export PLATFORM_RISCV_ABI=lp64d
-  export FW_PAYLOAD=y
-  export FW_TEXT_START=0x80000000
-  export FW_FDT_PATH="${DTB_OUT}"
-  export FW_PAYLOAD_PATH="${OUT_DIR}/Image"
   make clean
-  make -s -j"$(nproc)"
+  make -s -j"$(nproc)" \
+    CROSS_COMPILE="${CROSS_COMPILE}" \
+    PLATFORM=generic \
+    PLATFORM_RISCV_XLEN=64 \
+    PLATFORM_RISCV_ISA=rv64imac_zicsr_zifencei \
+    PLATFORM_RISCV_ABI=lp64 \
+    FW_PAYLOAD=y \
+    FW_TEXT_START=0x80000000 \
+    FW_FDT_PATH="${DTB_OUT}" \
+    FW_PAYLOAD_PATH="${OUT_DIR}/Image"
   cp -f build/platform/generic/firmware/fw_payload.elf "${OUT_DIR}/fw_payload.elf"
   popd >/dev/null
 

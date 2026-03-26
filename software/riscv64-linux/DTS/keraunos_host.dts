@@ -1,15 +1,17 @@
 /dts-v1/;
+
 /*
- * Keraunos PCIE Tile — host Linux device tree for VDK (TT_Rocket_LT).
- * Minimal variant for fast VP boot (mini-linux config).
+ * Device Tree for SMC_PCIE_Tile Host_Chiplet VDK.
  *
- * Differences from smc_pcie_tile.dts (reference):
- *   - timebase-frequency: 10 MHz (vs 100 MHz) — fewer timer IRQs simulated
- *   - DRAM: 64 MB (vs 256 MB) — faster memblock/page-table init
- *   - PLIC ndev: 64 (vs 255) — smaller context table init
- *   - CPU: optional pmp/clock props removed
- *   - PCIe: clocks reference removed (DWC VP uses vpcfg overrides, not DT clocks)
- *   - bootargs: rdinit=/init + pci= flags for initramfs + PCIe enumeration
+ * Addresses derived from Properties.xml iBus|TT_Rocket_LT_PSP_1_DATA
+ * range_mappings and SharedMemoryMap_intf:
+ *   DRAM:       0x80000000 (1 GB — bus maps 0x40000000 bytes)
+ *   UART:       0xC000A000 (DW_APB_UART_SC)
+ *   PLIC:       0xC4000000 (size 0x210000)
+ *   CLINT:      0x02000000 (standard RISC-V, internal to Imperas)
+ *   PCIe DBI:   0x44000000 (4 MB)
+ *   PCIe ATU:   0x44300000 (128 KB)
+ *   PCIe CFG:   0x70000000 (4 KB)
  */
 
 / {
@@ -20,25 +22,25 @@
     cpus {
         #address-cells = <0x1>;
         #size-cells = <0x0>;
-        timebase-frequency = <0x5f5e100>;   /* 100 MHz — matches smc_pcie_tile.dts */
+        timebase-frequency = <0x989680>;    /* 10 MHz (was 100 MHz) — 10x fewer timer IRQs */
 
         cpu@0 {
-            compatible = "riscv";
             device_type = "cpu";
             reg = <0x0>;
             status = "okay";
+            compatible = "riscv";
             riscv,isa = "rv64imac";
             mmu-type = "riscv,sv39";
 
             cpu0_intc: interrupt-controller {
-                compatible = "riscv,cpu-intc";
                 #interrupt-cells = <0x1>;
                 interrupt-controller;
+                compatible = "riscv,cpu-intc";
+                phandle = <0x2>;
             };
         };
     };
 
-    /* 256 MB — matches smc_pcie_tile.dts */
     memory@80000000 {
         device_type = "memory";
         reg = <0x0 0x80000000 0x0 0x10000000>;
@@ -61,31 +63,20 @@
             #interrupt-cells = <0x1>;
             interrupt-controller;
             reg = <0x0 0xc4000000 0x0 0x210000>;
-            riscv,ndev = <64>;              /* reduced from 255 — only need up to IRQ 33 */
+            riscv,ndev = <64>;
             interrupts-extended = <&cpu0_intc 11>, <&cpu0_intc 9>;
+            phandle = <0x1>;
         };
 
         uart0: serial@c000a000 {
             compatible = "snps,dw-apb-uart";
             reg = <0x0 0xc000a000 0x0 0x100>;
-            /* No interrupts — VDK PLIC does not deliver UART IRQ.
-               The 8250 driver falls back to timer-based polling. */
             reg-shift = <0x2>;
             reg-io-width = <0x4>;
-            clock-frequency = <0x5f5e100>;
-            current-speed = <0x1c200>;
+            clock-frequency = <0x6DDD000>;   /* 115.2 MHz — matches vpcfg UART_CLK override */
+            current-speed = <0x6DDD00>;    /* 7.2 Mbaud — divisor 1 for fastest polled I/O */
         };
 
-        /*
-         * PCIe Root Complex (Synopsys DesignWare)
-         * VDK path: Host_Chiplet > Misc > PCIE_RC
-         *
-         * AXI_Slave window (0x70000000, 256MB):
-         *   0x70000000-0x70FFFFFF (16MB)  -> config region (CFG TLPs via iATU)
-         *   0x71000000-0x7FFFFFFF (240MB) -> MEM region (MEM TLPs to EP BARs)
-         *
-         * No clocks reference — DWC VP model uses vpcfg cc_*_Override params.
-         */
         pcie: pcie@44000000 {
             compatible = "snps,dw-pcie";
             reg = <0x0 0x44000000 0x0 0x400000>,
@@ -96,23 +87,35 @@
             #size-cells = <2>;
             device_type = "pci";
 
-            bus-range = <0x0 0xff>;
+            bus-range = <0x0 0x1>;
 
+            /* Split AXI_Slave window (0x70000000, 256MB):
+             * 0x70000000-0x70FFFFFF (16MB)  -> config region (CFG TLPs via iATU)
+             * 0x71000000-0x7FFFFFFF (240MB) -> MEM region (MEM TLPs to EP BARs) */
             ranges =
                 <0x02000000 0x0 0x71000000  0x0 0x71000000  0x0 0x0F000000>;
 
             interrupt-parent = <&plic>;
-            /* Index 0 = MSI (dw_pcie_msi_host_init), Index 1 = INTx */
+            /* Index 0 = MSI, Index 1 = INTx (pp->irq — mandatory for dw-pcie-plat probe) */
             interrupts = <32>, <33>;
 
             num-lanes = <4>;
+            num-vectors = <16>;
             status = "okay";
         };
     };
 
     chosen {
-        bootargs = "console=ttyS0,115200 earlycon=uart8250,mmio32,0xC000A000 rdinit=/init pci=realloc pci=assign-busses";
-        stdout-path = "serial0:115200n8";
+        bootargs = "console=ttyS0,7200000 earlycon=sbi loglevel=4 ignore_loglevel nokaslr pci=noaer pcie_aspm=off";
+        stdout-path = "serial0:7200000n8";
+        /* 64 bytes of fixed seed so the CRNG is credited immediately at boot —
+           eliminates the getrandom() stall in simulation (no HW entropy source). */
+        rng-seed = [
+            a1 b2 c3 d4 e5 f6 07 18  29 3a 4b 5c 6d 7e 8f 90
+            01 12 23 34 45 56 67 78  89 9a ab bc cd de ef f0
+            10 21 32 43 54 65 76 87  98 a9 ba cb dc ed fe 0f
+            f1 e2 d3 c4 b5 a6 97 88  79 6a 5b 4c 3d 2e 1f 00
+        ];
     };
 
     aliases {
